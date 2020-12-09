@@ -257,7 +257,7 @@ def admin_update_user(user_id):
         update_user = users.find_one({'_id': ObjectId(user_id)})
         flash(update_user['email'] + ' has been added.', 'success')
         return redirect(url_for('admin_users'))
-    return render_template('users.html', all_roles=roles.find(), all_users=users.find())
+    return render_template('users-admin.html', all_roles=roles.find(), all_users=users.find())
 
 
 ##########  Admin Functionality - Recipe Categories ##########
