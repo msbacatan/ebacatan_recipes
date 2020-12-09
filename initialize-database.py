@@ -8,8 +8,7 @@ APP_ROOT = os.path.join(os.path.dirname(__file__), '..')   # refers to applicati
 dotenv_path = os.path.join(APP_ROOT, '.env')
 load_dotenv(dotenv_path)
 
-#mongo = os.getenv('MONGO')
-mongo = "mongodb+srv://recipe-app:Y5hRGMpTRW33LBJP@cluster0.r7q4g.mongodb.net/recipe_db?retryWrites=true&w=majority"
+mongo = os.getenv('MONGO')
 
 client = pymongo.MongoClient(mongo)
 
@@ -70,7 +69,7 @@ def initial_database():
     user = add_role('user')
 
     # add users
-    mike = add_user('Emily', 'Bacatan', 'emily@emily.com', 'abc123', 'admin')
+    emily = add_user('Emily', 'Bacatan', 'emily@emily.com', 'abc123', 'admin')
 
     # add categories
     main = add_category('Main dishes')

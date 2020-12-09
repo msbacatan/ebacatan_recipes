@@ -5,77 +5,68 @@
 
 {% block body %} 
 
-<h1>Admin Page</h1>
+<h1>Recipe Admin Page</h1>
 <hr>
-<p>My recipes admin page</p>
-<h3>Create your recipe</h3>
-  <hr>
-  <form method="POST" action="/recipes/add-recipe">
+<div class="admin_left">
+    <h3 >Food Categories</h3>
+    <form method='POST' action="{{url_for('add_category')}}">
+        <input type="text" name="new_category" placeholder="add new category"><input type="submit" value="Submit">
+    </form>
+    <hr>
 
-    <p> <label  for="first_name"> Recipe Name: </label>    
-    <input type="text" id="first_name" name="first_name" required autofocus ></p>
-
-    <p> <label  for="category"> Category: </label>    
-    <input type="text" id="category" name="category" required ></p>
-    <p> 
-        <label for="category">Categories :</label>
-        <select name="category" required>
-            <option value="" selected disabled hidden> -- Choose category -- </option>
-            {% for category in all_categories %}
-           <option value="{{ category['category_name'] }}">{{ category['category_name'] }}</option>
+        {% for category in all_categories %}
+    <p><a
+        href="{{ (url_for('delete_category', category_id=category['_id'])) }}"><img src="{{ url_for('static', filename='icons/delete.png') }}"></a>
+        &nbsp;{{ category.category_name }} </p>
         {% endfor %}
-        </select>
-    </p>
+        <br clear="all">
+    
+</div>
+<br clear="all">
 
-    <p> <label  for="recipe_owner"> Recipe Owner: </label>    
-    <input type="text" id="recipe_owner" name="recipe_owner" required ></p>
-
-    <p> <label  for="password"> Added By: </label>    
-    <input type="text" id="password" name="password" required ></p>
-
-    <p> <label  for="added_by"> Date Added: </label>    
-    <input type="text" id="added_by" name="added_by" required ></p>
-
-    <p>  
-    <input type="submit" value="Add Recipe"></p>
-
+<h3>All Recipes</h3>
+<form method="GET" action="{{ url_for('add_recipe') }}">
+    <button type="submit" class="btn btn-info">Add a new recipe</button>
 </form>
-  <hr>
 
-  <br>
-  {% if all_recipes %}
-    <table>
-        <thead>
-            <tr>
-                <th>Recipe Name</th>
-                <th>Category</th>
-                <th>Recipe Owner</th>
-                <th>Added By</th>
-                <th>Date Added</th>
-            </tr>
-        </thead>
+<br>
+{% if all_recipes %}
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Recipe Name</th>
+            <th scope="col">Category</th>
+            <th scope="col">Recipe Owner</th>
+            <th scope="col">Added By </th>
+            <th scope="col">Date Added</th>
+        </tr>
+    </thead>
 
-        <tbody>
-            {% for row in all_recipes %}
-            <tr>
-                
-                <td> {{ row['recipe_name'] }}</td>
-                <td> {{ row['category'] }}</td>
-                <td> {{ row['recipe_owner'] }}</td>
-                <td> {{ row['added_by'] }}</td>
-                <td> {{ row['date_added'] }}</td>
-            
-                <td><form action="{{ url_for('admin_delete_user', user_id=row['_id']) }}" method="POST">
-                    <input type="submit" value="Delete"  />
-                </form>    </td>
+    <tbody>
+        {% for recipe in all_recipes %}
+        <tr>
 
-                <td><form action="{{ url_for('admin_edit_user', user_id=row['_id']) }}" method="POST">
-                    <input type="submit" value="Details"  />
-                </form>    </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            <td> {{ recipe['recipe_name'] }}</td>
+            <td> {{ recipe['category'] }}</td>
+            <td> {{ recipe['recipe_owner'] }}</td>
+            <td> {{ recipe['added_by'] }}</td>
+            <td> {{ recipe['date_added'] }}</td>
+            <td>
+                <form action="{{ url_for('edit_recipe', recipe_id=recipe['_id']) }}" method="POST">
+                    <input type="submit" class="btn btn-primary" value="Details" />
+                </form>
+            </td>
+            <td>
+                <form action="{{ url_for('delete_recipe', recipe_id=recipe['_id']) }}" method="POST">
+                    <input type="submit" class="btn btn-danger" value="Delete" />
+                </form>
+            </td>
+
+           
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 {% endif %}
 
 {% endblock %}
