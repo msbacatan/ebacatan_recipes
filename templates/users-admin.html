@@ -28,8 +28,8 @@
             <input type="text" id="confirm_password" name="confirm_password" required ></div>
 
         <div class="form-group"> 
-        <label for="role">Role :</label>
-        <select name="role" required>
+        <label for="role" class="mr-sm-2">Role :</label>
+        <select name="role" class="custom-select mr-sm-2" required>
             <option value="" selected disabled hidden> -- Choose role -- </option>
             {% for role in all_roles %}
             <option value="{{ role['role_name'] }}">{{ role['role_name'] }}</option>
@@ -37,7 +37,7 @@
         </select>
         </div>
 
-        <div class="form-group"> <input type="submit" value="Add User"></div>
+        <div class="form-group"> <input type="submit" value="Add User" class="btn btn-secondary"></div>
     </form>
 </div>
 <br clear="all"><br><br>
