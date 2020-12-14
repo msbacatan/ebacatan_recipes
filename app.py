@@ -106,7 +106,7 @@ def search():
 # unauthenticated users can view the about page
 @app.route('/about')
 def about():
-    return 'about page'
+    return render_template('about.html')
 
 @app.route('/register')
 def register():
